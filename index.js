@@ -1,14 +1,18 @@
 const express = require('express');
 const app = express();
 
-// consider express as a box have many tools , but it is closed . In order to use express tools we have to open box. so we call it as "express()" and store it in const app then this box get open and then we can use every tool as app.tool....
-// In express we dont have to use "createserver" the express manage it itself
-// Express also uses HTTP at backend
+// Rendering html 
+// 1st download ejs using "npm i ejs"
+// set view engine
+// create views folder
+// make index.ejs in views folder
+// now use res.render instead of res.send
+// enter file name into "" q.m
 
-// Keep in mind use of '=,==,===' in js in http server
+app.set('view engine', 'ejs')
 
 app.get('/',(req,res)=>{
-    res.send("Hello Learner")
+    res.render("index")
 })
 
 app.get('/about',(req,res)=>{

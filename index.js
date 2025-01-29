@@ -1,62 +1,45 @@
 const express = require('express');
-const morgan = require('morgan')
+// const morgan = require('morgan')
 const app = express();
 
-
-app.use(morgan('dev'))
-
-// Third PArty Middle ware
-// we can do this from npmjs.com
-// search morgan "LOGGER"
-// npm i morgan
-// This tells which request comes to your server, when comes to your server, which method request, how much time it take to proceed and many more such things to proceed
-// middleware works for all routes
-
-
-
-app.set('view engine', 'ejs')
-
-app.use((req,res,next)=>{
-    console.log("this is middle ware")
-    // res.send("COMSIAN DEV ON TOP")
-    return next()
+app.use(express.json());
+app.use(express.urlencoded({extended:true}))
+app.get("/",(req,res)=>{
+    res.render("index.ejs")
+})
+// app.get('/get-form-data',(req,res)=>{
+//     console.log(req.query);
+//     // req.query contains all data  in terms of get method
+//     res.send("Data Submitted Successfuly")
+// })
+app.post('/get-form-data',(req,res)=>{
+    console.log(req.body);
+    // req.body contains all data in terms of post method 
+    res.send("Data Submitted Successfuly")
 })
 
-// Giving middle ware to specific route
-app.get('/',(req,res,next)=>{
-    const a = 5;
-    const b= 10;
-    console.log(a+b);
-    next()
 
-    // should write next()
-    // to proceed completey and have respone
-    // We dont pass response to middleware
-},(req,res)=>{
-    res.render("index")
-})
+// The data comes into request.query
+// Then response will be give
+// Now paste the route in "action" of form in index.ejs
+// when we run we get output {} this because we are getting data but data don't have specific identification
+// we should name inputs in order to resolve this problem
+// After giving name output = { username: 'shazia', email: 'shazia@gmail.com', password: '12345678' }
+// The data submitted is sowing in url
+// password is senstive info it should not be shown
+// if we don't want to show our data in url we will use post route
+// post method is generally used to take data from frontend to backend
+// get method is generally used to take data from server to frontend
+// if we use post method data comes into req.body
+// to use post u must specify post method in form
+// automatically form detects get method
+// Now the output is "undefined"
+// it comes because express by default cant read req.body
+// in order to resolve this we have to use two express middlewares express.json() and express.urlencoded
+// ({extended:true})
+// Both these are BUILT IN MIDDLEWARES
+// Now The Output is  { username: 'measum', email: 'love uh', password: 'jadfa' }
 
-app.get('/about',(req,res)=>{
-    res.send("About Page")
-})
-
-app.get('/contact',(req,res)=>{
-    res.send("contact page")
-})
-
-// output for simple /
-// this is middle ware
-// Request,route,time
-// GET / 304 68.430 ms - -
-// So in this way this middlework works
-
-
-
-// output for /about
-// this is middle ware
-// this is middle ware
-// GET /about 304 27.692 ms
-// So in this way this middlework works
 
 app.listen(3000);
 

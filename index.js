@@ -39,6 +39,31 @@ app.get('/get-user',(req,res)=>{
   
 })
 
+app.get('/update-user',async(req,res)=>{
+    // Before updating any user we find it then update it
+    // for this we have a method :
+    // this fnction is asynchronous so we will use async and await
+
+    await userModel.findOneAndUpdate({
+        username:'meadu',
+        // this will find
+    },{
+        email:'measum',
+        // this will update
+    })
+
+    res.send("User Updated");
+})
+
+// similarly we will perform delete operation
+app.get('/delete',async (req,res)=>{
+    await userModel.findOneAndDelete({
+        username:'meadu'
+    })
+    res.send("USER DELETED")
+    // The user will be deleted in db
+})
+
 
  
 

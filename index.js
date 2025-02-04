@@ -5,17 +5,40 @@ const userModel = require('./models/user')
 const connection = require('./config/db')
  
 
-// Now we will see how can we register or create a user
-// 1st we will take data from frontend to backend
-// Then we will send this data to server
-// to do this we will creeate a route /register
-// we create a form in register.ejs
-// we create action of form as '/register'
-// VIPPPPPP now understand one thing we created one router /register down here using get method used to show page and /register in form action to get by using post method
-// so we can make two routtes of same name wth differnet methods
-// now we destruct data from request.body in user routes
-// now we need model to store data
-// we create user by usermodel by using create method
+// Now we will read crud operations
+// we have seen create 
+// now will see read method
+// we have two methods 
+// 1st one is given below
+
+app.get('/get-users',(req,res)=>{
+    userModel.find(
+        // this method will return all users and return it in then 
+        // we can also apply condition here
+        // {username:'meadu'}
+        // it always return an array whether its empty or not
+    ).then((users)=>{
+        res.send(users);
+        // Now this will give data of all users we have
+    })
+
+})
+
+// 2nd one is given below
+// it only gives one entry
+// it gives null when condition don't satisfies
+// but find ()gives empty array
+app.get('/get-user',(req,res)=>{
+    userModel.findOne({
+        username:'meadu',
+    }).then(
+        (user)=>{
+            res.send(user)
+        }
+    )
+  
+})
+
 
  
 
